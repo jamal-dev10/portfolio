@@ -40,7 +40,7 @@ export default function Contact() {
                 Phone: <span className="text-white">0689208829</span>
               </p>
               <p className="text-zinc-300 mt-2">
-                Address: <span className="text-white">Azrou, Morocco</span>
+                Address: <span className="text-white">Casablanca, Morocco</span>
               </p>
             </div>
           </ScrollAnimationWrapper>
