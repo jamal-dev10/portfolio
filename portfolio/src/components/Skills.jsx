@@ -1,15 +1,17 @@
-import { SiJavascript, SiReact, SiNodedotjs, SiPhp, SiMysql, SiGit, SiTailwindcss, SiDocker } from 'react-icons/si'
+import { SiJavascript, SiReact, SiNodedotjs, SiPhp, SiMysql, SiGit, SiTailwindcss, SiHtml5, SiCss3, SiPython } from 'react-icons/si'
 import ScrollAnimationWrapper from './ScrollAnimationWrapper'
 
 const items = [
-  { icon: SiJavascript, label: 'JavaScript' },
-  { icon: SiReact, label: 'React' },
-  { icon: SiNodedotjs, label: 'Node.js' },
-  { icon: SiPhp, label: 'PHP' },
-  { icon: SiMysql, label: 'MySQL' },
-  { icon: SiGit, label: 'Git' },
-  { icon: SiTailwindcss, label: 'Tailwind' },
-  { icon: SiDocker, label: 'Docker' },
+  { icon: SiHtml5,       label: 'HTML',       color: '#E34F26' },
+  { icon: SiCss3,        label: 'CSS',        color: '#1572B6' },
+  { icon: SiJavascript,  label: 'JavaScript', color: '#F7DF1E' },
+  { icon: SiReact,       label: 'React',      color: '#61DAFB' },
+  { icon: SiNodedotjs,   label: 'Node.js',    color: '#339933' },
+  { icon: SiPython,      label: 'Python',     color: '#3776AB' },
+  { icon: SiPhp,         label: 'PHP',        color: '#777BB4' },
+  { icon: SiMysql,       label: 'MySQL',      color: '#4479A1' },
+  { icon: SiGit,         label: 'Git',        color: '#F05032' },
+  { icon: SiTailwindcss, label: 'Tailwind',   color: '#06B6D4' },
 ]
 
 export default function Skills() {
@@ -19,15 +21,32 @@ export default function Skills() {
         <ScrollAnimationWrapper animation="fadeUp">
           <h2 className="section-title text-center">Sk<span>ills</span></h2>
         </ScrollAnimationWrapper>
-        
-        <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
-          {items.map(({icon: Icon, label}, i) => (
+
+        <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5">
+          {items.map(({ icon: Icon, label, color }, i) => (
             <ScrollAnimationWrapper key={label} animation="scale" delay={i * 0.1}>
-              <div className="card p-6 text-center hover:shadow-glow transition">
-                <div className="mx-auto w-12 h-12 rounded-xl bg-zinc-800 flex items-center justify-center mb-3">
-                  <Icon size={26} />
+              <div
+                className="card p-6 text-center transition-all duration-300 hover:-translate-y-1 group"
+                style={{ '--skill-color': color }}
+              >
+                <div
+                  className="mx-auto w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300"
+                  style={{
+                    background: 'rgba(255,255,255,0.05)',
+                    boxShadow: `0 0 0 0 ${color}00`,
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = `${color}22`
+                    e.currentTarget.style.boxShadow = `0 0 16px 2px ${color}55`
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)'
+                    e.currentTarget.style.boxShadow = `0 0 0 0 ${color}00`
+                  }}
+                >
+                  <Icon size={30} color={color} />
                 </div>
-                <p className="font-semibold">{label}</p>
+                <p className="font-semibold text-sm tracking-wide text-zinc-200">{label}</p>
               </div>
             </ScrollAnimationWrapper>
           ))}
