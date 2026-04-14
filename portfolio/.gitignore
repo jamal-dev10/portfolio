@@ -1,0 +1,38 @@
+# Dependencies (المكتبات)
+node_modules/
+.pnp
+.pnp.js
+
+# Testing (الاختبارات)
+coverage/
+
+# Production (نسخة البناء النهائية)
+dist/
+
+# Misc (ملفات متنوعة)
+.DS_Store
+*.pem
+
+# Debug (سجلات الأخطاء)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files (ملفات البيئة - مهمة للخصوصية)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor folders (إعدادات برامج الكود)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Your specific project folder
+.qodo/
