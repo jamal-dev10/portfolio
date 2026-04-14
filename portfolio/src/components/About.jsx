@@ -6,14 +6,14 @@ export default function About() {
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
         <ScrollAnimationWrapper animation="fadeLeft" delay={0.2}>
           <div className="card p-6">
-            <img 
-              className="rounded-xl object-cover w-full h-72" 
-              src="https://picsum.photos/800/500?grayscale" 
-              alt="portrait" 
+            <img
+              className="rounded-xl object-cover w-full h-60"
+              src="../../public/imgs/me.png"
+              alt="Jamal Ezziouani"
             />
           </div>
         </ScrollAnimationWrapper>
-        
+
         <ScrollAnimationWrapper animation="fadeRight" delay={0.4}>
           <div>
             <h2 className="section-title">About <span>Me</span></h2>
