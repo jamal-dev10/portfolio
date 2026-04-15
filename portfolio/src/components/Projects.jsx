@@ -2,48 +2,50 @@ import ScrollAnimationWrapper from './ScrollAnimationWrapper'
 
 export default function Projects() {
   const data = [
+
     {
-      title: 'Leman Group Website',
-      img: 'https://picsum.photos/seed/p1/800/500',
-      demo: 'https://your-demo-link.com',
-      code: 'https://github.com/your-username/leman-group',
-      desc: 'Corporate website built with React.',
+      title: 'Admin Dashboard Panel',
+      img: '/imgs/Dashbord.png', // حرف D كبير و png.
+      demo: 'https://jamal-dashboard.vercel.app', 
+      code: 'https://github.com/your-username/admin-dashboard', 
+      desc: 'A full-featured management dashboard with real-time data tracking, product inventory management, and revenue analytics.',
     },
     {
-      title: 'Food Ordering App',
-      img: 'https://picsum.photos/seed/p2/800/500',
-      demo: 'https://your-demo-link.com',
-      code: 'https://github.com/your-username/food-ordering',
-      desc: 'SPA for browsing and ordering meals.',
+      title: 'FitFlex - Fitness & Nutrition',
+      img: '/imgs/fitflex.png', // png.
+      demo: 'https://fitflex-demo.vercel.app', 
+      code: 'https://github.com/jamal-dev10/Fitflix.github', 
+      desc: 'A comprehensive fitness platform featuring personalized workout programs and nutrition plans with a modern dark UI.',
     },
     {
-      title: 'Photo Gallery',
-      img: 'https://picsum.photos/seed/p3/800/500',
-      demo: 'https://your-demo-link.com',
-      code: 'https://github.com/your-username/photo-gallery',
-      desc: 'Masonry gallery with filters and lightbox.',
+      title: 'IPTV LITE - Landing Page',
+      img: '/imgs/iptv-lite.png', // png.
+      demo: 'https://iptv-lite-demo.vercel.app', 
+      code: 'https://github.com/jamal-dev10/Iptv-web-site-.github', 
+      desc: 'A professional landing page for streaming services, featuring high-converting CTA sections and service benefits.',
     },
     {
-      title: 'Portfolio Dashboard',
-      img: 'https://picsum.photos/seed/p4/800/500',
-      demo: 'https://your-demo-link.com',
-      code: 'https://github.com/your-username/portfolio-dashboard',
-      desc: 'Analytics dashboard with real-time charts and dark UI.',
+      title: 'SkyCast - Weather App',
+      img: '/imgs/weader-app.jpg', // هادي الوحيدة اللي .jpg عندك فالفولدر
+      demo: 'https://skycast-weather.vercel.app', 
+      code: 'https://github.com/your-username/weather-app', 
+      desc: 'A sleek weather application featuring real-time data fetching and a beautiful glassmorphism UI design.',
     },
     {
-      title: 'E-Commerce Store',
-      img: 'https://picsum.photos/seed/p5/800/500',
-      demo: 'https://your-demo-link.com',
-      code: 'https://github.com/your-username/ecommerce-store',
-      desc: 'Full-stack online shop with cart, auth, and Stripe payments.',
+      title: 'Smart Parking App',
+      img: '/imgs/parking.png', // عندك فالفولدر .png ماشي .jpg
+      demo: 'https://smart-parking-demo.vercel.app', 
+      code: 'https://github.com/jamal-dev10/Auto-mobile.github', 
+      desc: 'A modern landing page for a mobile parking solution, showcasing real-time availability and vibrant purple UI.',
     },
     {
-      title: 'Weather App',
-      img: 'https://picsum.photos/seed/p6/800/500',
-      demo: 'https://your-demo-link.com',
-      code: 'https://github.com/your-username/weather-app',
-      desc: 'Real-time weather forecasts using OpenWeather API.',
+      title: 'Food Lover - Restaurant',
+      img: '/imgs/food-lover.png', // عندك فالفولدر .png ماشي .jpg
+      demo: 'https://food-lover-demo.vercel.app', 
+      code: 'https://github.com/your-username/food-lover', 
+      desc: 'A sophisticated restaurant landing page featuring special offers and a premium dark aesthetic.',
     },
+  
   ]
 
   return (
