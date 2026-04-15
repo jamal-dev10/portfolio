@@ -5,42 +5,42 @@ export default function Projects() {
 
     {
       title: 'Admin Dashboard Panel',
-      img: '/imgs/Dashbord.png', // حرف D كبير و png.
+      img: '/imgs/Dashbord.png', 
       demo: 'https://jamal-dashboard.vercel.app', 
       code: 'https://github.com/your-username/admin-dashboard', 
       desc: 'A full-featured management dashboard with real-time data tracking, product inventory management, and revenue analytics.',
     },
     {
       title: 'FitFlex - Fitness & Nutrition',
-      img: '/imgs/fitflex.png', // png.
+      img: '/imgs/fitflex.png', 
       demo: 'https://fitflex-demo.vercel.app', 
       code: 'https://github.com/jamal-dev10/Fitflix.github', 
       desc: 'A comprehensive fitness platform featuring personalized workout programs and nutrition plans with a modern dark UI.',
     },
     {
       title: 'IPTV LITE - Landing Page',
-      img: '/imgs/iptv-lite.png', // png.
+      img: '/imgs/iptv-lite.png', 
       demo: 'https://iptv-lite-demo.vercel.app', 
-      code: 'https://github.com/jamal-dev10/Iptv-web-site-.github', 
+      code: 'https://github.com/jamal-dev10/Iptv-web-site-', 
       desc: 'A professional landing page for streaming services, featuring high-converting CTA sections and service benefits.',
     },
     {
       title: 'SkyCast - Weather App',
-      img: '/imgs/weader-app.jpg', // هادي الوحيدة اللي .jpg عندك فالفولدر
+      img: '/imgs/weader-app.jpg', 
       demo: 'https://skycast-weather.vercel.app', 
       code: 'https://github.com/your-username/weather-app', 
       desc: 'A sleek weather application featuring real-time data fetching and a beautiful glassmorphism UI design.',
     },
     {
       title: 'Smart Parking App',
-      img: '/imgs/parking.png', // عندك فالفولدر .png ماشي .jpg
+      img: '/imgs/parking.png', 
       demo: 'https://smart-parking-demo.vercel.app', 
-      code: 'https://github.com/jamal-dev10/Auto-mobile.github', 
+      code: 'https://github.com/jamal-dev10/Auto-mobile', 
       desc: 'A modern landing page for a mobile parking solution, showcasing real-time availability and vibrant purple UI.',
     },
     {
       title: 'Food Lover - Restaurant',
-      img: '/imgs/food-lover.png', // عندك فالفولدر .png ماشي .jpg
+      img: '/imgs/food-lover.png', 
       demo: 'https://food-lover-demo.vercel.app', 
       code: 'https://github.com/your-username/food-lover', 
       desc: 'A sophisticated restaurant landing page featuring special offers and a premium dark aesthetic.',

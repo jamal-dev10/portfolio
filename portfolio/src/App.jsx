@@ -4,6 +4,7 @@ import Social from "./components/Social";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Resume from "./components/Resume";
+import Certificates from "./components/Certificates"; // 1. زدنا الـ Import هنا
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -15,38 +16,40 @@ export default function App() {
     <div>
       <Navbar />
 
-      
+      <main>
+        <ScrollAnimation>
+          <Hero />
+        </ScrollAnimation>
 
-<main>
-  <ScrollAnimation>
-    <Hero />
-  </ScrollAnimation>
+        <ScrollAnimation>
+          <About />
+        </ScrollAnimation>
 
-  <ScrollAnimation>
-    <About />
-  </ScrollAnimation>
+        <ScrollAnimation>
+          <Social />
+        </ScrollAnimation>
 
-  <ScrollAnimation>
-    <Social />
-  </ScrollAnimation>
+        <ScrollAnimation>
+          <Skills />
+        </ScrollAnimation>
 
-  <ScrollAnimation>
-    <Skills />
-  </ScrollAnimation>
+        <ScrollAnimation>
+          <Resume />
+        </ScrollAnimation>
 
-  <ScrollAnimation>
-    <Resume />
-  </ScrollAnimation>
+        {/* 2. زدنا سيكشن الشهادات هنا باش تعطي قوة لـ Resume قبل ما يوصل الزائر لـ Projects */}
+        <ScrollAnimation>
+          <Certificates />
+        </ScrollAnimation>
 
-  <ScrollAnimation>
-    <Projects />
-  </ScrollAnimation>
+        <ScrollAnimation>
+          <Projects />
+        </ScrollAnimation>
 
-  <ScrollAnimation>
-    <Contact />
-  </ScrollAnimation>
-</main>
-
+        <ScrollAnimation>
+          <Contact />
+        </ScrollAnimation>
+      </main>
 
       <Footer />
 
