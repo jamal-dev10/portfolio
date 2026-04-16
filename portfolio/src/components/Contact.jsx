@@ -10,15 +10,16 @@ export default function Contact() {
     e.preventDefault();
     setIsSending(true);
 
-    const SERVICE_ID = "service_cz0f63n"; 
-    const TEMPLATE_ID = "template_q05nfib"; 
-    const PUBLIC_KEY = "4JMRBviXwXQ_YWDIE"; 
+    // العيـاط لـ المغيرات من ملف .env باش يكون الكود احترافي ومخفي
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
           console.log("SUCCESS!", result.text);
           alert("Message sent successfully! ✅");
-          form.current.reset();
+          form.current.reset(); // كيمسح الفورم ملي كيتصيفط الميساج
       }, (error) => {
           console.log("FAILED...", error.text);
           alert("Failed to send message. Please try again. ❌");
@@ -37,10 +38,10 @@ export default function Contact() {
                    <label className="block text-zinc-400 text-sm mb-2">Full Name</label>
                    <input 
                       type="text" 
-                      name="name" 
+                      name="name" // مطابقة مع {{name}} فـ Template ديالك
                       placeholder="Your Name" 
                       required 
-                      className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none" 
+                      className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none transition-all" 
                    />
                 </div>
 
@@ -48,30 +49,31 @@ export default function Contact() {
                    <label className="block text-zinc-400 text-sm mb-2">Email Address</label>
                    <input 
                       type="email" 
-                      name="email" 
+                      name="email" // مطابقة مع {{email}} اللي كاينا فـ Template
                       placeholder="your@email.com" 
                       required 
-                      className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none" 
+                      className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none transition-all" 
                    />
                 </div>
 
                 <div>
                    <label className="block text-zinc-400 text-sm mb-2">Your Message</label>
                    <textarea 
-                      name="message" 
+                      name="message" // مطابقة مع {{message}} فـ Template
                       placeholder="How can I help you?" 
                       required 
                       rows="4" 
-                      className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none resize-none"
+                      className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none resize-none transition-all"
                    ></textarea>
                 </div>
 
+                {/* حقل مخفي لتمرير الوقت لـ {{time}} فـ التيمبليت */}
                 <input type="hidden" name="time" value={new Date().toLocaleString()} />
 
                 <button 
                    type="submit" 
                    disabled={isSending} 
-                   className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+                   className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                    {isSending ? "Sending..." : "Send Message"}
                    <Send size={18} />
@@ -79,8 +81,9 @@ export default function Contact() {
              </form>
           </div>
 
-          <div className="flex flex-col justify-center space-y-8">
-             <h2 className="text-4xl font-bold text-white tracking-tight">Get In <span className="text-purple-500">Touch</span></h2>
+          {/* جهة المعلومات الشخصية */}
+          <div className="flex flex-col justify-center space-y-8 text-white">
+             <h2 className="text-4xl font-bold tracking-tight">Get In <span className="text-purple-500">Touch</span></h2>
              
              <div className="space-y-6">
                 <div className="flex items-center gap-4 group">
@@ -89,7 +92,7 @@ export default function Contact() {
                    </div>
                    <div>
                       <p className="text-xs text-zinc-500 uppercase tracking-widest">Email Me</p>
-                      <p className="text-zinc-200">jamalezziouani.45@gmail.com</p> {/* */}
+                      <p className="text-zinc-200">jamalezziouani.45@gmail.com</p>
                    </div>
                 </div>
 
@@ -99,7 +102,7 @@ export default function Contact() {
                    </div>
                    <div>
                       <p className="text-xs text-zinc-500 uppercase tracking-widest">Call Me</p>
-                      <p className="text-zinc-200">0689208829</p> {/* */}
+                      <p className="text-zinc-200">0689208829</p>
                    </div>
                 </div>
 
@@ -109,7 +112,7 @@ export default function Contact() {
                    </div>
                    <div>
                       <p className="text-xs text-zinc-500 uppercase tracking-widest">Location</p>
-                      <p className="text-zinc-200">Casablanca, Morocco</p> {/* */}
+                      <p className="text-zinc-200">Casablanca, Morocco</p>
                    </div>
                 </div>
              </div>
