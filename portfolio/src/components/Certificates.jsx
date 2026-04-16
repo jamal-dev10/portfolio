@@ -65,8 +65,7 @@ export default function Certificates() {
                   <p className="text-sm text-zinc-400 mt-3">
                     Issued by <span className="text-zinc-100 font-semibold">{cert.provider}</span>
                   </p>
-
-                  {/* Skills Tags - هادي كاتزيد لمسة احترافية */}
+                  
                   <div className="flex flex-wrap gap-2 mt-5">
                     {cert.skills.map((skill, index) => (
                       <span key={index} className="text-[10px] text-zinc-500 bg-zinc-800/50 px-2 py-1 rounded">

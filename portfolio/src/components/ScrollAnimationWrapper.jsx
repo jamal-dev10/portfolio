@@ -10,12 +10,11 @@ function useScrollAnimation(threshold = 0.1, triggerOnce = true) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (triggerOnce) {
-          // Animation تخدم مرة وحدة (default behavior)
           if (entry.isIntersecting) {
             setIsVisible(true);
           }
         } else {
-          // Animation تخدم كل مرة كتدخل و كتخرج
+
           setIsVisible(entry.isIntersecting);
         }
       },
@@ -42,7 +41,7 @@ export default function ScrollAnimationWrapper({
   animation = 'fadeUp', 
   delay = 0, 
   duration = 0.6,
-  triggerOnce = false  // غير هنا: false = تعاود تخدم، true = مرة وحدة
+  triggerOnce = false 
 }) {
   const [ref, isVisible] = useScrollAnimation(0.1, triggerOnce);
 
