@@ -25,8 +25,8 @@ export default function Projects() {
       desc: 'A professional landing page for streaming services, featuring high-converting CTA sections and service benefits.',
     },
     {
-      title: 'SkyCast - Weather App',
-      img: '/imgs/weader-app.jpg', 
+      title: 'WeatherScope - Weather App',
+      img: '/imgs/weather.png', 
       demo: 'https://skycast-weather.vercel.app', 
       code: 'https://github.com/your-username/weather-app', 
       desc: 'A sleek weather application featuring real-time data fetching and a beautiful glassmorphism UI design.',

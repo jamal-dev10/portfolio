@@ -10,7 +10,6 @@ export default function Contact() {
     e.preventDefault();
     setIsSending(true);
 
-    // العيـاط لـ المغيرات من ملف .env باش يكون الكود احترافي ومخفي
     const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -19,7 +18,7 @@ export default function Contact() {
       .then((result) => {
           console.log("SUCCESS!", result.text);
           alert("Message sent successfully! ✅");
-          form.current.reset(); // كيمسح الفورم ملي كيتصيفط الميساج
+          form.current.reset(); 
       }, (error) => {
           console.log("FAILED...", error.text);
           alert("Failed to send message. Please try again. ❌");
@@ -38,7 +37,7 @@ export default function Contact() {
                    <label className="block text-zinc-400 text-sm mb-2">Full Name</label>
                    <input 
                       type="text" 
-                      name="name" // مطابقة مع {{name}} فـ Template ديالك
+                      name="name" 
                       placeholder="Your Name" 
                       required 
                       className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none transition-all" 
@@ -49,7 +48,7 @@ export default function Contact() {
                    <label className="block text-zinc-400 text-sm mb-2">Email Address</label>
                    <input 
                       type="email" 
-                      name="email" // مطابقة مع {{email}} اللي كاينا فـ Template
+                      name="email" 
                       placeholder="your@email.com" 
                       required 
                       className="w-full bg-black/50 border border-zinc-800 rounded-xl p-4 text-white focus:border-purple-500 outline-none transition-all" 
@@ -59,7 +58,7 @@ export default function Contact() {
                 <div>
                    <label className="block text-zinc-400 text-sm mb-2">Your Message</label>
                    <textarea 
-                      name="message" // مطابقة مع {{message}} فـ Template
+                      name="message" 
                       placeholder="How can I help you?" 
                       required 
                       rows="4" 
@@ -67,7 +66,6 @@ export default function Contact() {
                    ></textarea>
                 </div>
 
-                {/* حقل مخفي لتمرير الوقت لـ {{time}} فـ التيمبليت */}
                 <input type="hidden" name="time" value={new Date().toLocaleString()} />
 
                 <button 
