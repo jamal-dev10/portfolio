@@ -4,7 +4,7 @@ import Social from "./components/Social";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Resume from "./components/Resume";
-import Certificates from "./components/Certificates"; // 1. زدنا الـ Import هنا
+import Certificates from "./components/Certificates"
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -37,7 +37,7 @@ export default function App() {
           <Resume />
         </ScrollAnimation>
 
-        {/* 2. زدنا سيكشن الشهادات هنا باش تعطي قوة لـ Resume قبل ما يوصل الزائر لـ Projects */}
+        
         <ScrollAnimation>
           <Certificates />
         </ScrollAnimation>
@@ -53,7 +53,6 @@ export default function App() {
 
       <Footer />
 
-      {/* زر الطلوع للفوق */}
       <ScrollToTopButton />
     </div>
   );
