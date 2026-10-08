@@ -27,7 +27,7 @@ export default function About() {
               <li><strong className="text-white">Location:</strong> Morocco</li>
               <li><strong className="text-white">Languages:</strong> Arabic, French, English</li>
             </ul>
-            <a href="/cv-jamal.pdf" download className="btn-primary mt-6 inline-block">
+            <a href="/CV_Jamal_Ezziouani_EN.pdf" download className="btn-primary mt-6 inline-block">
               Télécharger mon CV
             </a>
           </div>

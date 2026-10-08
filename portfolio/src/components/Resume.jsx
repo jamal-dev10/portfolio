@@ -71,7 +71,7 @@ export default function Resume() {
               </ul>
 
               <a
-                href="./CV_Jamal_Ezziouani.pdf"
+                href="/CV_Jamal_Ezziouani_EN.pdf"
                 download
                 className="btn-primary mt-8 inline-flex items-center gap-2"
               >
