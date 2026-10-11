@@ -4,7 +4,7 @@ import Social from "./components/Social";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Resume from "./components/Resume";
-import Certificates from "./components/Certificates"
+import Certificates from "./components/Certificates";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -13,7 +13,7 @@ import ScrollAnimation from "./components/ScrollAnimationWrapper";
 
 export default function App() {
   return (
-    <div>
+    <div className="bg-bg text-content transition-colors duration-300">
       <Navbar />
 
       <main>
@@ -37,7 +37,6 @@ export default function App() {
           <Resume />
         </ScrollAnimation>
 
-        
         <ScrollAnimation>
           <Certificates />
         </ScrollAnimation>

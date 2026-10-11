@@ -5,18 +5,21 @@ export default function Hero() {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
 
-      {/* Video Background */}
+      {/* Video Background (dark mode only) */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="dark-only absolute inset-0 w-full h-full object-cover z-0"
         src="/bg.mp4"
       />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/60 to-black z-10" />
+      {/* Dark overlay (dark mode) */}
+      <div className="dark-only absolute inset-0 bg-gradient-to-b from-black/60 via-black/60 to-black z-10" />
+
+      {/* Light mode background */}
+      <div className="light-only absolute inset-0 bg-gradient-to-b from-violet-100 via-violet-50 to-bg z-10" />
 
       {/* Content */}
       <div className="relative z-20 px-6">
@@ -33,7 +36,7 @@ export default function Hero() {
         </ScrollAnimationWrapper>
 
         <ScrollAnimationWrapper animation="fadeUp" delay={0.4} duration={0.8}>
-          <p className="mt-4 text-lg md:text-xl text-zinc-200">
+          <p className="mt-4 text-lg md:text-xl text-muted">
             I build clean, fast, and accessible web apps.
           </p>
         </ScrollAnimationWrapper>
@@ -41,7 +44,7 @@ export default function Hero() {
         <ScrollAnimationWrapper animation="scale" delay={0.6} duration={0.8}>
           <div className="mt-8 flex items-center justify-center gap-4">
             <a href="#contact" className="btn-primary">Contact Me</a>
-            <a href="#projects" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-zinc-700 hover:border-primary transition">
+            <a href="#projects" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-line hover:border-primary transition">
               View Projects
             </a>
           </div>
