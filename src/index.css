@@ -64,7 +64,7 @@ body {
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-surface/80 hover:bg-surfaceHover text-content px-5 py-3 font-semibold hover:border-primary/50 active:scale-[0.98] transition-all;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-surface/80 hover:bg-surfaceHover text-content px-5 py-3 font-semibold hover:border-primary active:scale-[0.98] transition-all;
 }
 
 /* Custom subtle scrollbar */
