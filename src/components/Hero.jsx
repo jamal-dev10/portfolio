@@ -1,8 +1,71 @@
+import { useState, useEffect, useRef } from 'react'
 import Typing from './Typing.jsx'
 import ScrollAnimationWrapper from './ScrollAnimationWrapper'
-import { ArrowDown, Mail, Download, Terminal, Code2, Sparkles, MapPin } from 'lucide-react'
+import { ArrowDown, Mail, Download, Terminal, Code2, Sparkles, MapPin, Calculator, Clock } from 'lucide-react'
+import useCasablancaTime from '../hooks/useCasablancaTime'
 
-export default function Hero({ onOpenTerminal }) {
+function AnimatedCounter({ end, duration = 1600, suffix = '', prefix = '', padZero = false, startFrom = 0 }) {
+  const [count, setCount] = useState(startFrom)
+  const elementRef = useRef(null)
+
+  const runAnimation = () => {
+    let startTime = null
+    const startVal = startFrom
+    const totalChange = end - startVal
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / duration, 1)
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      const currentVal = Math.floor(startVal + totalChange * easeOut)
+      setCount(currentVal)
+
+      if (progress < 1) {
+        requestAnimationFrame(step)
+      } else {
+        setCount(end)
+      }
+    }
+
+    requestAnimationFrame(step)
+  }
+
+  useEffect(() => {
+    let hasTriggered = false
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTriggered) {
+          hasTriggered = true
+          runAnimation()
+        }
+      },
+      { threshold: 0.15 }
+    )
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [end, duration, startFrom])
+
+  const formattedCount = padZero && count < 10 ? `0${count}` : count
+
+  return (
+    <span
+      ref={elementRef}
+      onClick={runAnimation}
+      title="Click to replay count animation"
+      className="font-mono text-3xl font-extrabold text-content tracking-tight tabular-nums select-none cursor-pointer group-hover:text-primary transition-colors"
+    >
+      {prefix}{formattedCount}{suffix}
+    </span>
+  )
+}
+
+export default function Hero({ onOpenTerminal, onOpenEstimator }) {
+  const { time, greeting, isWorkingHour } = useCasablancaTime()
+
   return (
     <section id="home" className="relative min-h-[92vh] flex items-center pt-24 pb-16 overflow-hidden">
       {/* Ambient background decoration */}
@@ -25,15 +88,16 @@ export default function Hero({ onOpenTerminal }) {
           {/* Left Column: Typographic Presentation */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             
-            {/* Status Line */}
+            {/* Status Line with dynamic greeting & live time */}
             <ScrollAnimationWrapper animation="fadeDown" duration={0.6}>
-              <div className="flex items-center gap-2 text-xs font-medium text-muted mb-4 tracking-wide uppercase">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+              <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-muted mb-4 tracking-wide">
+                <span className={`w-2 h-2 rounded-full shrink-0 ${isWorkingHour ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+                <span className="text-content font-semibold">{greeting}!</span>
                 <span>Available for opportunities</span>
                 <span aria-hidden="true">·</span>
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 font-mono">
                   <MapPin size={12} className="text-primary" />
-                  Casablanca, Morocco
+                  Casablanca {time ? `(${time})` : ''}
                 </span>
               </div>
             </ScrollAnimationWrapper>
@@ -80,6 +144,16 @@ export default function Hero({ onOpenTerminal }) {
                   <span>View Projects</span>
                   <ArrowDown size={16} />
                 </a>
+
+                {onOpenEstimator && (
+                  <button
+                    onClick={onOpenEstimator}
+                    className="btn-secondary"
+                  >
+                    <Calculator size={16} className="text-primary" />
+                    <span>Project Estimator</span>
+                  </button>
+                )}
 
                 <a href="#contact" className="btn-secondary">
                   <Mail size={16} className="text-primary" />
@@ -160,21 +234,21 @@ export default function Hero({ onOpenTerminal }) {
         {/* 4-Item KPI Strip */}
         <ScrollAnimationWrapper animation="fadeUp" delay={0.5} duration={0.6}>
           <div className="mt-16 pt-8 border-t border-line grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="flex flex-col">
-              <span className="font-mono text-3xl font-extrabold text-content tracking-tight">06+</span>
-              <span className="text-xs text-muted mt-1 uppercase tracking-wider">Featured Projects</span>
+            <div className="flex flex-col group p-2 rounded-xl transition-all duration-300 hover:bg-surface/50">
+              <AnimatedCounter end={6} duration={1400} suffix="+" padZero={true} />
+              <span className="text-xs text-muted mt-1 uppercase tracking-wider group-hover:text-primary transition-colors">Featured Projects</span>
             </div>
-            <div className="flex flex-col">
-              <span className="font-mono text-3xl font-extrabold text-content tracking-tight">10+</span>
-              <span className="text-xs text-muted mt-1 uppercase tracking-wider">Core Technologies</span>
+            <div className="flex flex-col group p-2 rounded-xl transition-all duration-300 hover:bg-surface/50">
+              <AnimatedCounter end={10} duration={1600} suffix="+" />
+              <span className="text-xs text-muted mt-1 uppercase tracking-wider group-hover:text-primary transition-colors">Core Technologies</span>
             </div>
-            <div className="flex flex-col">
-              <span className="font-mono text-3xl font-extrabold text-content tracking-tight">100%</span>
-              <span className="text-xs text-muted mt-1 uppercase tracking-wider">Responsive Design</span>
+            <div className="flex flex-col group p-2 rounded-xl transition-all duration-300 hover:bg-surface/50">
+              <AnimatedCounter end={100} duration={1800} suffix="%" />
+              <span className="text-xs text-muted mt-1 uppercase tracking-wider group-hover:text-primary transition-colors">Responsive Design</span>
             </div>
-            <div className="flex flex-col">
-              <span className="font-mono text-3xl font-extrabold text-content tracking-tight">2024</span>
-              <span className="text-xs text-muted mt-1 uppercase tracking-wider">DTS Digital Dev</span>
+            <div className="flex flex-col group p-2 rounded-xl transition-all duration-300 hover:bg-surface/50">
+              <AnimatedCounter end={2024} startFrom={1995} duration={1600} />
+              <span className="text-xs text-muted mt-1 uppercase tracking-wider group-hover:text-primary transition-colors">DTS Digital Dev</span>
             </div>
           </div>
         </ScrollAnimationWrapper>

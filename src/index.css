@@ -6,6 +6,8 @@
 
 :root {
   --primary: #8B5CF6;
+  --primary-dark: #7C3AED;
+  --primary-light: #A78BFA;
 
   /* dark theme (default) */
   --bg: 9 9 11;

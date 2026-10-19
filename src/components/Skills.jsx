@@ -138,7 +138,7 @@ const allSkills = [
   },
 ]
 
-export default function Skills() {
+export default function Skills({ onSelectSkill }) {
   const [activeTab, setActiveTab] = useState('all')
 
   const filteredSkills = activeTab === 'all'
@@ -244,7 +244,21 @@ export default function Skills() {
 
                 <div className="mt-4 pt-3 border-t border-line/60 flex items-center justify-between text-[11px] font-mono text-muted">
                   <span>Proficiency</span>
-                  <span className="text-primary font-semibold">Active In Production</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (onSelectSkill) {
+                        const cleanTag = label.replace('.js', '').split(' ')[0]
+                        onSelectSkill(cleanTag)
+                        const pEl = document.getElementById('projects')
+                        if (pEl) pEl.scrollIntoView({ behavior: 'smooth' })
+                      }
+                    }}
+                    className="text-primary hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>View Projects</span>
+                    <span>→</span>
+                  </button>
                 </div>
               </div>
             </ScrollAnimationWrapper>

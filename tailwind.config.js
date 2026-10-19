@@ -11,9 +11,9 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
-        primary: "#8B5CF6",
-        primaryDark: "#7C3AED",
-        primaryLight: "#A78BFA",
+        primary: "var(--primary)",
+        primaryDark: "var(--primary-dark)",
+        primaryLight: "var(--primary-light)",
         bg: "rgb(var(--bg) / <alpha-value>)",
         surface: "rgb(var(--surface) / <alpha-value>)",
         surfaceHover: "rgb(var(--surface-hover) / <alpha-value>)",

@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import ScrollAnimationWrapper from './ScrollAnimationWrapper'
-import { ExternalLink, Eye, X, Layers, Sparkles } from 'lucide-react'
+import { ExternalLink, Eye, X, Search, SlidersHorizontal, RotateCcw } from 'lucide-react'
 import { FaGithub } from 'react-icons/fa'
 
-export default function Projects() {
+export default function Projects({ activeTagFilter, onClearTagFilter }) {
   const [filter, setFilter] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [sortBy, setSortBy] = useState('featured')
   const [activeProject, setActiveProject] = useState(null)
 
   const projects = [
@@ -127,16 +129,57 @@ export default function Projects() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  const filteredProjects = filter === 'all'
-    ? projects
-    : projects.filter(p => p.category === filter)
+  // Sync external tag filter if passed
+  useEffect(() => {
+    if (activeTagFilter) {
+      setSearchQuery(activeTagFilter)
+    }
+  }, [activeTagFilter])
+
+  // Filter and sort computation
+  const filteredProjects = useMemo(() => {
+    let result = [...projects]
+
+    // Category filter
+    if (filter !== 'all') {
+      result = result.filter(p => p.category === filter)
+    }
+
+    // Search query filter (title, description, or tags)
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim()
+      result = result.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        p.shortDesc.toLowerCase().includes(q) ||
+        p.tags.some(tag => tag.toLowerCase().includes(q))
+      )
+    }
+
+    // Sort order
+    if (sortBy === 'name-asc') {
+      result.sort((a, b) => a.title.localeCompare(b.title))
+    } else if (sortBy === 'category') {
+      result.sort((a, b) => a.category.localeCompare(b.category))
+    }
+
+    return result
+  }, [projects, filter, searchQuery, sortBy])
+
+  const clearAllFilters = () => {
+    setFilter('all')
+    setSearchQuery('')
+    setSortBy('featured')
+    if (onClearTagFilter) onClearTagFilter()
+  }
+
+  const isFiltered = filter !== 'all' || searchQuery.trim() !== ''
 
   return (
     <section id="projects" className="section bg-surface/30 border-t border-line transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
           <ScrollAnimationWrapper animation="fadeDown">
             <span className="text-xs font-mono font-semibold text-primary uppercase tracking-widest">
               03 / Selected Works
@@ -145,59 +188,107 @@ export default function Projects() {
               Featured Projects
             </h2>
             <p className="mt-2 text-muted text-sm sm:text-base max-w-xl">
-              A curated selection of web applications, administrative panels, and digital solutions built with performance in mind.
+              Dynamic repository of responsive web apps, management dashboards, and high-converting landing sites.
             </p>
           </ScrollAnimationWrapper>
 
-          {/* Filter Tabs (Interactive Segmented Control) */}
-          <div className="flex items-center gap-1 p-1 bg-surface border border-line rounded-xl overflow-x-auto">
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-                filter === 'all'
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-muted hover:text-content'
-              }`}
-            >
-              All Projects ({projects.length})
-            </button>
-            <button
-              onClick={() => setFilter('fullstack')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-                filter === 'fullstack'
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-muted hover:text-content'
-              }`}
-            >
-              Full-Stack
-            </button>
-            <button
-              onClick={() => setFilter('frontend')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-                filter === 'frontend'
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-muted hover:text-content'
-              }`}
-            >
-              Web Apps
-            </button>
-            <button
-              onClick={() => setFilter('landing')}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
-                filter === 'landing'
-                  ? 'bg-primary text-white shadow-sm'
-                  : 'text-muted hover:text-content'
-              }`}
-            >
-              Landing Pages
-            </button>
+          {/* Active Search & Filter Count Indicator */}
+          <div className="text-xs font-mono text-muted flex items-center gap-2 self-start md:self-end">
+            <span>Dynamic filter:</span>
+            <span className="font-bold text-primary">{filteredProjects.length}</span>
+            <span>of {projects.length} displayed</span>
+            {isFiltered && (
+              <button
+                onClick={clearAllFilters}
+                className="ml-2 flex items-center gap-1 text-[11px] text-primary hover:underline"
+              >
+                <RotateCcw size={12} />
+                <span>Reset</span>
+              </button>
+            )}
           </div>
         </div>
+
+        {/* Dynamic Controls Bar: Search + Category Tabs + Sort */}
+        <div className="mb-8 p-3 rounded-2xl bg-surface border border-line flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 shadow-sm">
+          
+          {/* Dynamic Search Box */}
+          <div className="relative flex-1 min-w-[220px]">
+            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Live search by keyword or tech (React, PHP, Tailwind, Dashboard)..."
+              className="w-full bg-surfaceHover border border-line rounded-xl pl-9 pr-8 py-2 text-xs sm:text-sm text-content placeholder:text-muted focus:border-primary outline-none transition"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-content"
+                aria-label="Clear search query"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+
+          {/* Category Tabs (Segmented Control) */}
+          <div className="flex items-center gap-1 overflow-x-auto p-1 bg-surfaceHover rounded-xl">
+            {[
+              { id: 'all', label: 'All' },
+              { id: 'fullstack', label: 'Full-Stack' },
+              { id: 'frontend', label: 'Web Apps' },
+              { id: 'landing', label: 'Landing Pages' },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setFilter(tab.id)}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
+                  filter === tab.id
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-muted hover:text-content'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="flex items-center gap-2 shrink-0">
+            <SlidersHorizontal size={14} className="text-muted hidden sm:inline" />
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-surfaceHover border border-line rounded-xl px-3 py-2 text-xs font-medium text-content outline-none focus:border-primary cursor-pointer"
+            >
+              <option value="featured">Sort: Featured</option>
+              <option value="name-asc">Sort: Title (A-Z)</option>
+              <option value="category">Sort: Category</option>
+            </select>
+          </div>
+
+        </div>
+
+        {/* Empty State when Search Yields Zero */}
+        {filteredProjects.length === 0 && (
+          <div className="py-16 text-center card p-8 border-dashed">
+            <p className="text-base font-bold text-content">No matching projects found</p>
+            <p className="text-xs text-muted mt-1">No items match the keyword "{searchQuery}".</p>
+            <button
+              onClick={clearAllFilters}
+              className="mt-4 btn-secondary text-xs"
+            >
+              Reset Search Filters
+            </button>
+          </div>
+        )}
 
         {/* Projects Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, i) => (
-            <ScrollAnimationWrapper key={project.id} animation="fadeUp" delay={i * 0.1}>
+            <ScrollAnimationWrapper key={project.id} animation="fadeUp" delay={i * 0.08}>
               <article className="card overflow-hidden h-full flex flex-col justify-between group hover:-translate-y-1.5 hover:border-primary/50 hover:shadow-xl transition-all duration-300">
                 
                 {/* Media Container with Overlay Trigger */}
@@ -210,10 +301,10 @@ export default function Projects() {
                   />
                   
                   {/* Subtle Gradient Scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
                     <button
                       onClick={() => setActiveProject(project)}
-                      className="px-3 py-1.5 rounded-lg bg-white/90 text-zinc-900 text-xs font-semibold flex items-center gap-1.5 shadow hover:bg-white transition"
+                      className="px-3 py-1.5 rounded-lg bg-white/95 text-zinc-900 text-xs font-semibold flex items-center gap-1.5 shadow hover:bg-white transition"
                     >
                       <Eye size={14} />
                       <span>Quick View</span>
@@ -251,12 +342,18 @@ export default function Projects() {
                   <div className="mt-5 pt-4 border-t border-line/70">
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted font-mono mb-4">
                       {project.tags.map((tag, idx) => (
-                        <span key={tag} className="flex items-center gap-2">
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => setSearchQuery(tag)}
+                          className="hover:text-primary transition-colors cursor-pointer"
+                          title={`Filter by ${tag}`}
+                        >
                           <span className="text-content/80 font-medium">{tag}</span>
                           {idx < project.tags.length - 1 && (
-                            <span className="text-line" aria-hidden="true">·</span>
+                            <span className="text-line ml-2" aria-hidden="true">·</span>
                           )}
-                        </span>
+                        </button>
                       ))}
                     </div>
 
@@ -264,7 +361,7 @@ export default function Projects() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setActiveProject(project)}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border border-line bg-surface hover:bg-surfaceHover text-xs font-semibold text-content transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border border-line bg-surface hover:bg-surfaceHover text-xs font-semibold text-content transition-colors cursor-pointer"
                       >
                         <Eye size={14} className="text-primary" />
                         <span>Case Details</span>
@@ -362,9 +459,18 @@ export default function Projects() {
                 </span>
                 <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
                   {activeProject.tags.map((t) => (
-                    <span key={t} className="px-2.5 py-1 rounded-md bg-content/5 border border-line text-content">
+                    <button
+                      key={t}
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery(t)
+                        setActiveProject(null)
+                      }}
+                      className="px-2.5 py-1 rounded-md bg-content/5 border border-line text-content hover:border-primary transition"
+                      title={`Filter by ${t}`}
+                    >
                       {t}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>

@@ -15,11 +15,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLinkedin, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons'
 import ScrollAnimationWrapper from './ScrollAnimationWrapper'
 
-export default function Contact() {
+export default function Contact({ initialScope }) {
   const form = useRef()
   const [isSending, setIsSending] = useState(false)
   const [status, setStatus] = useState(null)
   const [copiedEmail, setCopiedEmail] = useState(false)
+  const [subject, setSubject] = useState('')
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    if (initialScope) {
+      if (initialScope.subject) setSubject(initialScope.subject)
+      if (initialScope.message) setMessage(initialScope.message)
+    }
+  }, [initialScope])
 
   const copyEmailToClipboard = () => {
     navigator.clipboard.writeText('jamalezziouani.45@gmail.com')
@@ -269,6 +278,8 @@ export default function Contact() {
                     <input
                       type="text"
                       name="subject"
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
                       placeholder="e.g. Full-Stack Web Development Inquiry"
                       className={inputClass}
                     />
@@ -280,6 +291,8 @@ export default function Contact() {
                     </label>
                     <textarea
                       name="message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
                       placeholder="Tell me about your project, timeline, and goals..."
                       required
                       rows="5"

@@ -1,10 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { ExternalLink, GitBranch, Terminal, Star, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, GitBranch, Star, RefreshCw, Radio } from 'lucide-react'
 import ScrollAnimationWrapper from './ScrollAnimationWrapper'
 
 export default function Social() {
+  const [githubData, setGithubData] = useState({
+    repos: 6,
+    followers: 1,
+    loaded: false,
+    updatedAt: null,
+  })
+  const [liveRepos, setLiveRepos] = useState([])
+  const [isSyncing, setIsSyncing] = useState(false)
+
+  const fetchGithub = async () => {
+    setIsSyncing(true)
+    try {
+      const userRes = await fetch('https://api.github.com/users/jamal-dev10')
+      if (userRes.ok) {
+        const u = await userRes.json()
+        setGithubData({
+          repos: u.public_repos ?? 6,
+          followers: u.followers ?? 1,
+          loaded: true,
+          updatedAt: new Date().toLocaleTimeString(),
+        })
+      }
+
+      const reposRes = await fetch('https://api.github.com/users/jamal-dev10/repos?sort=updated&per_page=3')
+      if (reposRes.ok) {
+        const r = await reposRes.json()
+        if (Array.isArray(r)) {
+          setLiveRepos(r.slice(0, 3))
+        }
+      }
+    } catch (err) {
+      console.warn('GitHub API rate limit or offline, using fallback state', err)
+      setGithubData(prev => ({ ...prev, loaded: true }))
+    } finally {
+      setIsSyncing(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchGithub()
+  }, [])
+
   const socialCards = [
     {
       name: 'GitHub',
@@ -13,8 +55,8 @@ export default function Social() {
       url: 'https://github.com/jamal-dev10',
       color: '#ffffff',
       desc: 'Open-source repositories, full-stack experiments, and continuous code commits.',
-      stats: '6+ Repositories · Active Contributions',
-      highlight: 'Featured: Fitflix, Auto-mobile'
+      stats: `${githubData.repos}+ Repositories · ${githubData.followers} Followers`,
+      highlight: 'Live GitHub Profile'
     },
     {
       name: 'LinkedIn',
@@ -44,17 +86,32 @@ export default function Social() {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <ScrollAnimationWrapper animation="fadeDown">
-            <span className="text-xs font-mono font-semibold text-primary uppercase tracking-widest">
-              Digital Footprint
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-content mt-1">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-mono font-semibold text-primary uppercase tracking-widest">
+                Digital Footprint
+              </span>
+              <span className="text-muted text-xs">·</span>
+              <span className="flex items-center gap-1 text-[11px] font-mono text-emerald-500">
+                <Radio size={12} className="animate-pulse" />
+                Live API Sync
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-content">
               Connect &amp; Collaborate
             </h2>
           </ScrollAnimationWrapper>
 
-          <p className="text-xs sm:text-sm text-muted font-mono">
-            Follow my engineering journey across the web
-          </p>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={fetchGithub}
+              disabled={isSyncing}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-line bg-surface text-xs font-mono text-muted hover:text-content transition"
+              title="Refresh live GitHub data"
+            >
+              <RefreshCw size={12} className={isSyncing ? 'animate-spin text-primary' : ''} />
+              <span>{isSyncing ? 'Syncing...' : 'Sync GitHub'}</span>
+            </button>
+          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,12 +152,63 @@ export default function Social() {
                 </div>
 
                 <div className="mt-5 pt-3 border-t border-line/60 flex items-center justify-between text-[11px] font-mono text-muted">
-                  <span>{card.stats}</span>
+                  <span className="font-semibold text-content">{card.stats}</span>
+                  <span className="text-primary">{card.highlight}</span>
                 </div>
               </a>
             </ScrollAnimationWrapper>
           ))}
         </div>
+
+        {/* Live GitHub Public Repos Feed */}
+        {liveRepos.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-line">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-mono font-semibold text-muted uppercase tracking-wider flex items-center gap-1.5">
+                <GitBranch size={13} className="text-primary" />
+                Live Repositories from GitHub API (@jamal-dev10)
+              </span>
+              <a
+                href="https://github.com/jamal-dev10?tab=repositories"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-mono text-primary hover:underline flex items-center gap-1"
+              >
+                <span>View all on GitHub</span>
+                <ArrowUpRight size={12} />
+              </a>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-3">
+              {liveRepos.map(repo => (
+                <a
+                  key={repo.id}
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3.5 rounded-xl bg-surface border border-line hover:border-primary/40 hover:bg-surfaceHover transition flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-content font-bold text-xs truncate">
+                      <span className="truncate group-hover:text-primary transition">{repo.name}</span>
+                      <ArrowUpRight size={12} className="text-muted shrink-0" />
+                    </div>
+                    <p className="text-[11px] text-muted line-clamp-2 mt-1">
+                      {repo.description || 'Full-stack repository on GitHub'}
+                    </p>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-line/50 flex items-center justify-between text-[10px] font-mono text-muted">
+                    <span>{repo.language || 'Code'}</span>
+                    <span className="flex items-center gap-1">
+                      <Star size={10} className="text-amber-400" />
+                      {repo.stargazers_count ?? 0}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
 
       </div>
     </section>
