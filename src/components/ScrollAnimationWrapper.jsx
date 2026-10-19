@@ -41,9 +41,9 @@ export default function ScrollAnimationWrapper({
   animation = 'fadeUp', 
   delay = 0, 
   duration = 0.6,
-  triggerOnce = false 
+  triggerOnce = true 
 }) {
-  const [ref, isVisible] = useScrollAnimation(0.1, triggerOnce);
+  const [ref, isVisible] = useScrollAnimation(0.08, triggerOnce);
 
   const animations = {
     fadeUp: {

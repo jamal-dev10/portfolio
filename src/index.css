@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #8B5CF6;
+
+  /* dark theme (default) */
+  --bg: 9 9 11;
+  --surface: 18 18 24;
+  --surface-hover: 28 28 36;
+  --border: 39 39 45;
+  --text: 244 244 245;
+  --muted: 156 163 175;
+}
+
+:root.light {
+  --bg: 248 249 252;
+  --surface: 255 255 255;
+  --surface-hover: 241 245 249;
+  --border: 226 232 240;
+  --text: 15 23 42;
+  --muted: 100 116 139;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: rgb(var(--text));
+  background: rgb(var(--bg));
+  transition: background-color .25s ease, color .25s ease;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #c4b5fd;
+}
+
+.section {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.section-title {
+  @apply text-3xl md:text-5xl font-extrabold tracking-tight text-content;
+  text-wrap: balance;
+}
+
+.card {
+  @apply rounded-2xl bg-surface border border-line transition-all duration-300;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-white hover:bg-primaryDark active:scale-[0.98] transition-all;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-surface/80 hover:bg-surfaceHover text-content px-5 py-3 font-semibold hover:border-primary/50 active:scale-[0.98] transition-all;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--bg));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* ===== Theme helpers ===== */
+.dark-only { display: block; }
+:root.light .dark-only { display: none; }
+
+.light-only { display: none; }
+:root.light .light-only { display: block; }
+
+:root.light .invert-on-light { filter: invert(1); }

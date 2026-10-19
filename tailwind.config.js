@@ -3,25 +3,27 @@ export default {
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
-      maxWidth: {
-        "110rem": "110rem",
+      fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       colors: {
         primary: "#8B5CF6",
-        primaryDark: "#6D28D9",
-        dark: "#0a0a0a",
-
-        // theme colors (kaytbdlo b dark/light)
+        primaryDark: "#7C3AED",
+        primaryLight: "#A78BFA",
         bg: "rgb(var(--bg) / <alpha-value>)",
         surface: "rgb(var(--surface) / <alpha-value>)",
+        surfaceHover: "rgb(var(--surface-hover) / <alpha-value>)",
         line: "rgb(var(--border) / <alpha-value>)",
         content: "rgb(var(--text) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
       },
       boxShadow: {
-        glow: "0 0 25px rgba(139, 92, 246, 0.35)",
+        glow: "0 0 30px -5px rgba(139, 92, 246, 0.35)",
+        card: "0 10px 30px -10px rgba(0, 0, 0, 0.3)",
       },
     },
   },

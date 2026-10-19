@@ -1,0 +1,8 @@
+{
+  "name": "Jamal Ezziouani Portfolio",
+  "description": "Personal developer portfolio of Jamal Ezziouani showcasing projects, skills, certificates, and resume.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
